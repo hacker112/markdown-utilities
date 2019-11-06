@@ -11,8 +11,8 @@
 				* [5](#5)
 					+ [6](#6)
 - [Characters](#characters)
-				* [åäö](#%C3%A5%C3%A4%C3%B6)
-					+ [ÅÄÖ](#%C3%A5%C3%A4%C3%B6)
+	* [åäö](#%C3%A5%C3%A4%C3%B6)
+	* [ÅÄÖ](#%C3%A5%C3%A4%C3%B6)
 - [Special characters](#special-characters)
 	* [A B](#a-b)
 	* [A B](#a--b)
@@ -38,8 +38,8 @@
 ####### 7
 
 # Characters
-##### åäö
-###### ÅÄÖ
+## åäö
+## ÅÄÖ
 
 # Special characters
 ## A B
