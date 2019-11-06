@@ -1,0 +1,29 @@
+{
+  "name": "markdown-tools",
+  "version": "0.0.1",
+  "description": "A collection of small handy tools for improving and converting markdown",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hacker112/markdown-tools.git"
+  },
+  "author": "David Granqvist",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hacker112/markdown-tools/issues"
+  },
+  "homepage": "https://github.com/hacker112/markdown-tools#readme",
+  "dependencies": {
+    "markdown-toc": "^1.2.0",
+    "meow": "^5.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.6.0"
+  },
+  "bin": {
+    "markdown-tools-github-toc": "bin/markdown-github-toc.js"
+  }
+}
