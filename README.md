@@ -1,15 +1,15 @@
-# markdown-tools
+# markdown-utilities
 A collection of small handy tools for improving and converting markdown
 
 # Tools
 
 <!-- toc -->
 
-- [markdown-tools-github-toc](#markdown-tools-github-toc)
+- [markdown-utilities-github-toc](#markdown-utilities-github-toc)
 
 <!-- tocstop -->
 
-# markdown-tools-github-toc
+# markdown-utilities-github-toc
 
 Add Github compatible table of content to markdown (Replacing "&lt;!-- toc --&gt;" in source file)
 
@@ -25,7 +25,7 @@ This tools uses [markdown-toc](https://github.com/jonschlinkert/markdown-toc#toc
 
 ```
     Usage:
-        $ markdown-tools-github-toc <source> [<destination>] [<options>]
+        $ markdown-utilities-github-toc <source> [<destination>] [<options>]
 
     <source> must be a markdown file, with the extension '.md'.
     <destination> must be a markdown file, with the extension '.md'
@@ -33,9 +33,9 @@ This tools uses [markdown-toc](https://github.com/jonschlinkert/markdown-toc#toc
 
 
     Examples:
-            $ markdown-tools-github-toc README.md
-            $ markdown-tools-github-toc in.md out.md --maxdepth 3
-            $ markdown-tools-github-toc README.md --insert
+            $ markdown-utilities-github-toc README.md
+            $ markdown-utilities-github-toc in.md out.md --maxdepth 3
+            $ markdown-utilities-github-toc README.md --insert
 
     Options:
         --help                       Display this menu

@@ -11,7 +11,7 @@ const meow = require('meow')
 
 const cli = meow(`
     Usage:
-        $ markdown-tools-github-toc <source> [<destination>] [<options>]
+        $ markdown-utilities-github-toc <source> [<destination>] [<options>]
 
     <source> must be a markdown file, with the extension '.md'.
     <destination> must be a markdown file, with the extension '.md'
@@ -19,9 +19,9 @@ const cli = meow(`
 
 
     Examples:
-            $ markdown-tools-github-toc README.md
-            $ markdown-tools-github-toc in.md out.md --maxdepth 3
-            $ markdown-tools-github-toc README.md --insert
+            $ markdown-utilities-github-toc README.md
+            $ markdown-utilities-github-toc in.md out.md --maxdepth 3
+            $ markdown-utilities-github-toc README.md --insert
 
     Options:
         --help                       Display this menu
