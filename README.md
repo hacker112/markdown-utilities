@@ -1,7 +1,13 @@
 # markdown-utilities
-A collection of small handy tools for improving and converting markdown
+A collection of small handy tools for improving and converting markdown.
 
-# Tools
+## Install
+
+```shell
+    $ npm install -g markdown-utilities
+```
+
+# Utilities
 
 <!-- toc -->
 
@@ -14,12 +20,6 @@ A collection of small handy tools for improving and converting markdown
 Add Github compatible table of content to markdown (Replacing "&lt;!-- toc --&gt;" in source file)
 
 This tools uses [markdown-toc](https://github.com/jonschlinkert/markdown-toc#tocinsert) internally.
-
-## Install
-
-```shell
-    $ npm install --save markdown-toc
-```
 
 ## CLI
 
