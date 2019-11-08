@@ -26,6 +26,6 @@
     "prettier": "1.18.2"
   },
   "bin": {
-    "markdown-utilities-github-toc": "bin/markdown-github-toc.js"
+    "markdown-github-toc": "bin/markdown-github-toc.js"
   }
 }
