@@ -21,7 +21,9 @@
     "meow": "^5.0.0"
   },
   "devDependencies": {
-    "eslint": "^6.6.0"
+    "eslint": "^6.6.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "prettier": "1.18.2"
   },
   "bin": {
     "markdown-utilities-github-toc": "bin/markdown-github-toc.js"
