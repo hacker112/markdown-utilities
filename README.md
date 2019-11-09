@@ -49,4 +49,4 @@ This tools uses [markdown-toc](https://github.com/jonschlinkert/markdown-toc) in
 
 Convert markdown to PDF (and also HTML) with optional table of content.
 
-Inspired by [MDPDF](https://www.npmjs.com/package/mdpdf) and [markdown-pdf](https://www.npmjs.com/package/markdown-pdf). With the improvement that you can generate a table of content (ToC) using [markdown-toc](https://github.com/jonschlinkert/markdown-toc), and the ToC document links works correctly in the PDF even if non-latin-letter like åäö are used.
+Inspired by [MDPDF](https://www.npmjs.com/package/mdpdf) and [markdown-pdf](https://www.npmjs.com/package/markdown-pdf). With the improvement that you can generate a table of content (ToC) using [markdown-toc](https://github.com/jonschlinkert/markdown-toc), and the ToC document links works correctly in the PDF even if non-latin-letter like åäö are used. Another improvement that is made compared to MDPDF is that the intermediate temporary HTML is never stored as a file unless you want it to be saved. If you choose to store the HTML it is minified before stored to disk.

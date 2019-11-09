@@ -32,7 +32,7 @@ const cli = meow(
         --toc                   Add table of content where a "toc" html comment is.
         --maxdepth=<depth>      TOC: Use headings whose depth is at most maxdepth (default: 6)
 
-        --keep-html=<file>      Keep intermediate HTML to file. if <file> is empty it follows the
+        --save-html=<file>      Save intermediate HTML to file. if no filename is given use <source>.pdf
 
         --help                  Display this menu
         --version               Display the application version
@@ -53,7 +53,7 @@ const cli = meow(
         type: 'string',
         default: '20mm',
       },
-      keepHtml: {
+      saveHtml: {
         type: 'string',
       },
       format: {
@@ -135,9 +135,9 @@ if (!/^(A[0-6]|Legal|Ledger|Letter|Tabloid)$/.test(format)) {
 
 const addToc = cli.flags.toc
 
-const keepHtml = cli.flags.keepHtml !== undefined
+const saveHtml = cli.flags.saveHtml !== undefined
 
-const htmlFile = cli.flags.keepHtml || destination.replace(/\.pdf/, '.html')
+const htmlFile = cli.flags.saveHtml || destination.replace(/\.pdf/, '.html')
 
 console.log(htmlFile)
 
@@ -153,7 +153,7 @@ const cliOptions = {
   margin,
   format,
   addToc,
-  keepHtml,
+  saveHtml,
   htmlFile,
 }
 
@@ -209,7 +209,7 @@ function markdownToHtml(markdown) {
     .render(markdown)
 }
 
-function createPdf(htmlPath, pdfPath, options) {
+function createPdf(html, pdfPath, options) {
   // Write html to a temp file
   let browser
   let page
@@ -222,7 +222,7 @@ function createPdf(htmlPath, pdfPath, options) {
     })
     .then(p => {
       page = p
-      return page.goto('file:' + path.resolve(htmlPath), {
+      return page.setContent(html, {
         waitUntil: 'networkidle2',
       })
     })
@@ -246,7 +246,6 @@ function createPdf(htmlPath, pdfPath, options) {
 
 let markdown = fs.readFileSync(source, 'utf-8')
 
-// TODO: compress CSS
 const cssStyleFiles = [
   path.join(__dirname, '../styles/github-markdown-css.css'),
   path.join(__dirname, '../styles/default.css'),
@@ -266,7 +265,7 @@ if (addToc) {
 
 const htmlContent = markdownToHtml(markdown)
 
-const html = `
+let html = `
 <!DOCTYPE html>
 <html>
 <head>
@@ -279,14 +278,19 @@ const html = `
 </html>
 `
 
-// TODO: html in memory if possible?
-fs.writeFileSync(htmlFile, html)
+if (saveHtml) {
+  // Make sure that the HTML is as small ass possible before saving it
+  const minify = require('html-minifier').minify
 
-createPdf(htmlFile, destination, {
+  html = minify(html, {
+    removeAttributeQuotes: true,
+    minifyCSS: true,
+  })
+
+  fs.writeFileSync(htmlFile, html)
+}
+
+createPdf(html, destination, {
   margin,
   format,
-}).then(() => {
-  if (!keepHtml) {
-    fs.unlinkSync(htmlFile)
-  }
 })
