@@ -20,7 +20,7 @@ A collection of small handy tools for improving and converting markdown.
 
 Add Github compatible table of content to markdown (Replacing "&lt;!-- toc --&gt;" in source file)
 
-This tools uses [markdown-toc](https://github.com/jonschlinkert/markdown-toc#tocinsert) internally.
+This tools uses [markdown-toc](https://github.com/jonschlinkert/markdown-toc) internally.
 
 ## CLI
 
@@ -44,3 +44,9 @@ This tools uses [markdown-toc](https://github.com/jonschlinkert/markdown-toc#toc
         --maxdepth=<depth>           Use headings whose depth is at most maxdepth (default: 6)
         --version                    Display the application version
 ```
+
+# markdown-to-pdf
+
+Convert markdown to PDF (and also HTML) with optional table of content.
+
+Inspired by [MDPDF](https://www.npmjs.com/package/mdpdf) and [markdown-pdf](https://www.npmjs.com/package/markdown-pdf). With the improvement that you can generate a table of content (ToC) using [markdown-toc](https://github.com/jonschlinkert/markdown-toc), and the ToC document links works correctly in the PDF even if non-latin-letter like åäö are used.

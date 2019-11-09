@@ -26,6 +26,7 @@
     "prettier": "1.18.2"
   },
   "bin": {
+    "markdown-to-pdf": "bin/markdown-to-pdf.js",
     "markdown-github-toc": "bin/markdown-github-toc.js"
   }
 }
