@@ -17,8 +17,11 @@
   },
   "homepage": "https://github.com/hacker112/markdown-utilities#readme",
   "dependencies": {
+    "highlight.js": "^9.16.2",
     "markdown-toc": "^1.2.0",
-    "meow": "^5.0.0"
+    "meow": "^5.0.0",
+    "puppeteer": "^2.0.0",
+    "remarkable": "^2.0.0"
   },
   "devDependencies": {
     "eslint": "^6.6.0",

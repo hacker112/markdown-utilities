@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-const toc = require('markdown-toc')
 const fs = require('fs')
 const meow = require('meow')
 
@@ -138,12 +137,15 @@ const addToc = cli.flags.toc
 
 const keepHtml = cli.flags.keepHtml !== undefined
 
-const htmlFile = cli.flags.keepHtml || destination.replace(/\.md$/, '.html')
+const htmlFile = cli.flags.keepHtml || destination.replace(/\.pdf/, '.html')
+
+console.log(htmlFile)
 
 if (!isHtml(htmlFile)) {
   showErrorAndHelp('html file must be end with .html')
 }
 
+// TODO: no print
 const cliOptions = {
   source,
   destination,
@@ -157,6 +159,134 @@ const cliOptions = {
 
 console.log(cliOptions)
 
+// TODO: move to be separate lib file
+
 //
 // TODO: do stuff
 //
+const { Remarkable } = require('remarkable')
+const path = require('path')
+const puppeteer = require('puppeteer')
+const toc = require('markdown-toc')
+//
+const hljs = require('highlight.js')
+
+function addTocToMarkdown(markdown, tocOptions) {
+  return toc.insert(markdown, tocOptions) //{open: '', close: ''});
+}
+
+function markdownToHtml(markdown) {
+  // Actual default values
+  return new Remarkable({
+    html: true,
+    highlight: function(str, lang) {
+      if (lang && hljs.getLanguage(lang)) {
+        try {
+          return hljs.highlight(lang, str).value
+          // eslint-disable-next-line no-empty
+        } catch (err) {}
+      }
+
+      try {
+        return hljs.highlightAuto(str).value
+        // eslint-disable-next-line no-empty
+      } catch (err) {}
+
+      return '' // use external default escaping
+    },
+  })
+    .use(remarkable => {
+      remarkable.renderer.rules.heading_open = function(tokens, idx) {
+        return (
+          '<h' +
+          tokens[idx].hLevel +
+          ' id=' +
+          toc.slugify(tokens[idx + 1].content) +
+          '>'
+        )
+      }
+    })
+    .render(markdown)
+}
+
+function createPdf(htmlPath, pdfPath, options) {
+  // Write html to a temp file
+  let browser
+  let page
+
+  return puppeteer
+    .launch({ headless: true })
+    .then(newBrowser => {
+      browser = newBrowser
+      return browser.newPage()
+    })
+    .then(p => {
+      page = p
+      return page.goto('file:' + path.resolve(htmlPath), {
+        waitUntil: 'networkidle2',
+      })
+    })
+    .then(() => {
+      const pdfOptions = {
+        margin: options.margin,
+        path: pdfPath,
+        displayHeaderFooter: false,
+        printBackground: true,
+        format: options.format,
+      }
+
+      console.log('pdfOptions', pdfOptions)
+
+      return page.pdf(pdfOptions)
+    })
+    .then(() => {
+      return browser.close()
+    })
+}
+
+let markdown = fs.readFileSync(source, 'utf-8')
+
+// TODO: compress CSS
+const cssStyleFiles = [
+  path.join(__dirname, '../styles/github-markdown-css.css'),
+  path.join(__dirname, '../styles/default.css'),
+  path.join(__dirname, '../node_modules/highlight.js/styles/github.css'),
+]
+
+const cssStyle = cssStyleFiles
+  .map(file => fs.readFileSync(file, 'utf-8').replace(/\r\n/g, '\n'))
+  .join('\n')
+
+if (addToc) {
+  markdown = addTocToMarkdown(markdown, {
+    indent: '\t',
+    maxdepth,
+  })
+}
+
+const htmlContent = markdownToHtml(markdown)
+
+const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <style>${cssStyle}</style>
+</head>
+<body class="markdown-body">
+  ${htmlContent}
+</body>
+</html>
+`
+
+// TODO: html in memory if possible?
+fs.writeFileSync(htmlFile, html)
+
+createPdf(htmlFile, destination, {
+  margin,
+  format,
+}).then(() => {
+  if (!keepHtml) {
+    fs.unlinkSync(htmlFile)
+  }
+})
