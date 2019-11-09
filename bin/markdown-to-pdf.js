@@ -246,6 +246,16 @@ function createPdf(html, pdfPath, options) {
 
 let markdown = fs.readFileSync(source, 'utf-8')
 
+if (addToc) {
+  markdown = addTocToMarkdown(markdown, {
+    indent: '\t',
+    maxdepth,
+  })
+}
+
+//
+// Generate CSS and HTML from markdown
+//
 const cssStyleFiles = [
   path.join(__dirname, '../styles/github-markdown-css.css'),
   path.join(__dirname, '../styles/default.css'),
@@ -256,14 +266,7 @@ const cssStyle = cssStyleFiles
   .map(file => fs.readFileSync(file, 'utf-8').replace(/\r\n/g, '\n'))
   .join('\n')
 
-if (addToc) {
-  markdown = addTocToMarkdown(markdown, {
-    indent: '\t',
-    maxdepth,
-  })
-}
-
-const htmlContent = markdownToHtml(markdown)
+const htmlMarkdownContent = markdownToHtml(markdown)
 
 let html = `
 <!DOCTYPE html>
@@ -273,7 +276,7 @@ let html = `
   <style>${cssStyle}</style>
 </head>
 <body class="markdown-body">
-  ${htmlContent}
+  ${htmlMarkdownContent}
 </body>
 </html>
 `
