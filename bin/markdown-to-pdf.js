@@ -139,40 +139,34 @@ const saveHtml = cli.flags.saveHtml !== undefined
 
 const htmlFile = cli.flags.saveHtml || destination.replace(/\.pdf/, '.html')
 
-console.log(htmlFile)
-
 if (!isHtml(htmlFile)) {
   showErrorAndHelp('html file must be end with .html')
 }
 
-// TODO: no print
-const cliOptions = {
-  source,
-  destination,
-  maxdepth,
-  margin,
-  format,
-  addToc,
-  saveHtml,
-  htmlFile,
-}
-
-console.log(cliOptions)
-
-// TODO: move to be separate lib file
+// const cliOptions = {
+//   source,
+//   destination,
+//   maxdepth,
+//   margin,
+//   format,
+//   addToc,
+//   saveHtml,
+//   htmlFile,
+// }
+//
+// console.log(cliOptions)
 
 //
-// TODO: do stuff
+// Convert to HTML/PDF
 //
 const { Remarkable } = require('remarkable')
 const path = require('path')
 const puppeteer = require('puppeteer')
 const toc = require('markdown-toc')
-//
 const hljs = require('highlight.js')
 
 function addTocToMarkdown(markdown, tocOptions) {
-  return toc.insert(markdown, tocOptions) //{open: '', close: ''});
+  return toc.insert(markdown, tocOptions)
 }
 
 function markdownToHtml(markdown) {
@@ -234,8 +228,6 @@ function createPdf(html, pdfPath, options) {
         printBackground: true,
         format: options.format,
       }
-
-      console.log('pdfOptions', pdfOptions)
 
       return page.pdf(pdfOptions)
     })
