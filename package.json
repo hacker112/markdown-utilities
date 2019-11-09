@@ -1,6 +1,6 @@
 {
   "name": "markdown-utilities",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "A collection of small handy tools for improving and converting markdown",
   "main": "index.js",
   "scripts": {
