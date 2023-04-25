@@ -173,10 +173,10 @@ function markdownToHtml(markdown) {
   // Actual default values
   return new Remarkable({
     html: true,
-    highlight: function (str, lang) {
-      if (lang && hljs.getLanguage(lang)) {
+    highlight: function (str, language) {
+      if (language && hljs.getLanguage(language)) {
         try {
-          return hljs.highlight(lang, str).value
+          return hljs.highlight(str, { language }).value
           // eslint-disable-next-line no-empty
         } catch (err) {}
       }
