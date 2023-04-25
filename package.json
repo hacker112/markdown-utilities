@@ -21,7 +21,7 @@
     "html-minifier": "^4.0.0",
     "markdown-toc": "^1.2.0",
     "meow": "^6.1.0",
-    "puppeteer": "^2.1.1",
+    "puppeteer": "^15.0.2",
     "remarkable": "^2.0.0"
   },
   "devDependencies": {
