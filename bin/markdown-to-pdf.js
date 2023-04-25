@@ -173,7 +173,7 @@ function markdownToHtml(markdown) {
   // Actual default values
   return new Remarkable({
     html: true,
-    highlight: function(str, lang) {
+    highlight: function (str, lang) {
       if (lang && hljs.getLanguage(lang)) {
         try {
           return hljs.highlight(lang, str).value
@@ -189,8 +189,8 @@ function markdownToHtml(markdown) {
       return '' // use external default escaping
     },
   })
-    .use(remarkable => {
-      remarkable.renderer.rules.heading_open = function(tokens, idx) {
+    .use((remarkable) => {
+      remarkable.renderer.rules.heading_open = function (tokens, idx) {
         return (
           '<h' +
           tokens[idx].hLevel +
@@ -210,11 +210,11 @@ function createPdf(html, pdfPath, options) {
 
   return puppeteer
     .launch({ headless: true })
-    .then(newBrowser => {
+    .then((newBrowser) => {
       browser = newBrowser
       return browser.newPage()
     })
-    .then(p => {
+    .then((p) => {
       page = p
       return page.setContent(html, {
         waitUntil: 'networkidle2',
@@ -255,7 +255,7 @@ const cssStyleFiles = [
 ]
 
 const cssStyle = cssStyleFiles
-  .map(file => fs.readFileSync(file, 'utf-8').replace(/\r\n/g, '\n'))
+  .map((file) => fs.readFileSync(file, 'utf-8').replace(/\r\n/g, '\n'))
   .join('\n')
 
 const htmlMarkdownContent = markdownToHtml(markdown)
